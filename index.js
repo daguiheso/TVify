@@ -1,3 +1,3 @@
 $(function() {
-	
+	var header = $('header')
 })
