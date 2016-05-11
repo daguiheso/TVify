@@ -33,8 +33,11 @@ $(function() {
 					.replace(':img:', show.image.medium)
 					.replace(':summary:', show.summary)
 					.replace(':img alt:', show.name + "Logo")
-
-				$tvShowsContainer.append($(article))
+				// Convirtiendo en jquery object
+				var $article = $(article)
+				$tvShowsContainer.append($article)
+				$article.hide()
+				$article.show('slow')
 			})
 		}
 	})
