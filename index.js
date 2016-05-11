@@ -25,6 +25,7 @@ $(function() {
 	$.ajax({
 		url : 'http://api.tvmaze.com/shows',
 		success: function (shows, textStatus, xhr) {
+			var $tvShowsContainer = $('#app-body').find('.tv-shows')
 			shows.forEach(function (show) {
 				var article = template
 					.replace(':name:', show.name)
@@ -32,9 +33,7 @@ $(function() {
 					.replace(':summary:', show.summary)
 					.replace(':img alt:', show.name + "Logo")
 
-				$('#app-body')
-					.find('.tv-shows')
-					.append($(article))
+				$tvShowsContainer.append($(article))
 			})
 		}
 	})
