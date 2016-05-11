@@ -29,17 +29,14 @@ $(function() {
 			$tvShowsContainer.find('.tv-show').remove()
 			var $loader = $('<div class="loader"></div>')
 			$loader.appendTo($tvShowsContainer)
-	 		$.ajax({
-	 			url: 'http://api.tvmaze.com/search/shows',
-	 			data: { q: query},
-	 			success: function (res, textStatus, xhr) {
+	 		$.ajax('http://api.tvmaze.com/search/shows', { data: { q: query} })
+	 			.then(function (res) {
 	 				$loader.remove();
 	 				var shows = res.map(function (el) {
 	 					return el.show
 	 				})
 	 				renderShows(shows)
-	 			}
-	 		})
+	 			})
 		})
 
 	var template = '<article class="tv-show">' +
@@ -52,11 +49,9 @@ $(function() {
 					'</div>' +
 				'</article>';
 
-	$.ajax({
-		url : 'http://api.tvmaze.com/shows',
-		success: function (shows, textStatus, xhr) {			
+	$.ajax('http://api.tvmaze.com/shows')
+		.then(function (shows) {
 			$tvShowsContainer.find('.loader').remove()
 			renderShows(shows)
-		}
-	})
+		})
 })
