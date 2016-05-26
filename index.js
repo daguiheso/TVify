@@ -1,6 +1,15 @@
 $(function() {
 
-	var $tvShowsContainer = $('#app-body').find('.tv-shows')
+	var $tvShowsContainer = $('#app-body').find('.tv-shows');
+
+	$tvShowsContainer.on('click', 'button.like', function (ev) {
+		var $this = $(this);
+		$this.animate({
+			'fontSize': '30px'
+		}, 'fast')
+		$this.closest('.tv-show')  /*closets function de jquery que busca padre que cumpla condicion*/
+			.toggleClass('liked')
+	})
 
 	function renderShows(shows) {
 		$tvShowsContainer.find('.loader').remove()
@@ -24,6 +33,7 @@ $(function() {
 	 	.find('form')
 	 	.submit(function (ev) {
 	 		ev.preventDefault();
+	 		debugger
 	 		var query = $(this)
 	 			.find('input[type="text"]')
 	 			.val();
@@ -47,6 +57,7 @@ $(function() {
 					'<div class="right info">' +
 						'<h1>:name:</h1>' +
 						'<p>:summary:</p>' +
+						'<button class="like">💙</button>' +
 					'</div>' +
 				'</article>';
 	if (!localStorage.shows) {
