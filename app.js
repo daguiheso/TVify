@@ -1,79 +1,67 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var $ = require('jquery');
+'use strict';
 
-$(function() {
+var _jquery = require('jquery');
 
-	var $tvShowsContainer = $('#app-body').find('.tv-shows');
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _jquery2.default)(function () {
+
+	var $tvShowsContainer = (0, _jquery2.default)('#app-body').find('.tv-shows');
 
 	$tvShowsContainer.on('click', 'button.like', function (ev) {
-		var $this = $(this);
+		var $this = (0, _jquery2.default)(this);
 		$this.animate({
 			'fontSize': '30px'
-		}, 'fast')
-		$this.closest('.tv-show')  /*closets function de jquery que busca padre que cumpla condicion*/
-			.toggleClass('liked')
-	})
+		}, 'fast');
+		$this.closest('.tv-show') /*closets function de jquery que busca padre que cumpla condicion*/
+		.toggleClass('liked');
+	});
 
 	function renderShows(shows) {
-		$tvShowsContainer.find('.loader').remove()
+		$tvShowsContainer.find('.loader').remove();
 		shows.forEach(function (show) {
-			var article = template
-				.replace(':name:', show.name)
-				.replace(':img:', show.image ? show.image.medium : '')
-				.replace(':summary:', show.summary)
-				.replace(':img alt:', show.name + "Logo")
+			var article = template.replace(':name:', show.name).replace(':img:', show.image ? show.image.medium : '').replace(':summary:', show.summary).replace(':img alt:', show.name + "Logo");
 			// Convirtiendo en jquery object
-			var $article = $(article)
-			$tvShowsContainer.append($article)
-			$article.hide()
-			$article.show('slow')
-		})
+			var $article = (0, _jquery2.default)(article);
+			$tvShowsContainer.append($article);
+			$article.hide();
+			$article.show('slow');
+		});
 	}
 	/**
-	 * Submit search form
-	 */
-	$('#app-body')
-	 	.find('form')
-	 	.submit(function (ev) {
-	 		ev.preventDefault();
-	 		debugger
-	 		var query = $(this)
-	 			.find('input[type="text"]')
-	 			.val();
-			$tvShowsContainer.find('.tv-show').remove()
-			var $loader = $('<div class="loader"></div>')
-			$loader.appendTo($tvShowsContainer)
-	 		$.ajax('http://api.tvmaze.com/search/shows', { data: { q: query} })
-	 			.then(function (res) {
-	 				$loader.remove();
-	 				var shows = res.map(function (el) {
-	 					return el.show
-	 				})
-	 				renderShows(shows)
-	 			})
-		})
+  * Submit search form
+  */
+	(0, _jquery2.default)('#app-body').find('form').submit(function (ev) {
+		ev.preventDefault();
+		debugger;
+		var query = (0, _jquery2.default)(this).find('input[type="text"]').val();
+		$tvShowsContainer.find('.tv-show').remove();
+		var $loader = (0, _jquery2.default)('<div class="loader"></div>');
+		$loader.appendTo($tvShowsContainer);
+		_jquery2.default.ajax('http://api.tvmaze.com/search/shows', { data: { q: query } }).then(function (res) {
+			$loader.remove();
+			var shows = res.map(function (el) {
+				return el.show;
+			});
+			renderShows(shows);
+		});
+	});
 
-	var template = '<article class="tv-show">' +
-					'<div class="left img-container">' +
-						'<img src=":img:" alt=":img alt:">' +
-					'</div>' +
-					'<div class="right info">' +
-						'<h1>:name:</h1>' +
-						'<p>:summary:</p>' +
-						'<button class="like">💙</button>' +
-					'</div>' +
-				'</article>';
+	var template = '<article class="tv-show">' + '<div class="left img-container">' + '<img src=":img:" alt=":img alt:">' + '</div>' + '<div class="right info">' + '<h1>:name:</h1>' + '<p>:summary:</p>' + '<button class="like">💙</button>' + '</div>' + '</article>';
 	if (!localStorage.shows) {
-		$.ajax('http://api.tvmaze.com/shows')
-			.then(function (shows) {
-				$tvShowsContainer.find('.loader').remove()
-				localStorage.shows = JSON.stringify(shows)
-				renderShows(shows)
-			})
+		_jquery2.default.ajax('http://api.tvmaze.com/shows').then(function (shows) {
+			$tvShowsContainer.find('.loader').remove();
+			localStorage.shows = JSON.stringify(shows);
+			renderShows(shows);
+		});
 	} else {
-		renderShows(JSON.parse(localStorage.shows))
+		renderShows(JSON.parse(localStorage.shows));
 	}
-})
+});
+
 },{"jquery":2}],2:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.4
