@@ -2,6 +2,7 @@
   "name": "tvify",
   "dependencies": {
     "jquery": "^2.2.4",
+    "page": "^1.7.1",
     "serve": "^1.4.0"
   },
   "devDependencies": {
