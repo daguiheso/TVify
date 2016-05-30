@@ -23,6 +23,15 @@ body {
 	color: #fff;
 }
 
+#app-header h1.danger {
+	color: red;
+}
+
+#app-header h1 a {
+	color: white;
+	text-decoration: none;
+}
+
 #app-body {
 	padding-top: 15vh;
 	width: 80%;
