@@ -3,6 +3,7 @@
   "dependencies": {
     "jquery": "^2.2.4",
     "page": "^1.7.1",
+    "qs": "^6.2.0",
     "serve": "^1.4.0"
   },
   "devDependencies": {
