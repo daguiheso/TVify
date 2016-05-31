@@ -1,29 +1,21 @@
 var fs = require('fs')
 var http = require('http')
+var assets = require('./assets.js')
 
-function serveStatic (name, callback) {
-	fs.readFile('./public/' + name, function (err, data) {
-		if (err) {
-			return callback(err)
-		}
-		callback(err, data.toString())
-	})
-}
-
-var server = http.createServer(function (req,res) {
+var server = http.createServer( (req,res) => {
 	switch(req.url) {
 		case '/':
-			serveStatic('index.html', function (err, content) {
+			assets.serveStatic('index.html', (err, content) => {
 				res.end(content)
 			})
 			break
 		case '/app.js':
-			serveStatic('app.js', function (err, content) {
+			assets.serveStatic('app.js', (err, content) => {
 				res.end(content)
 			})
 			break
 		case '/app.css':
-			serveStatic('app.css', function (err, content) {
+			assets.serveStatic('app.css', (err, content) => {
 				res.end(content)
 			})
 			break
@@ -34,6 +26,6 @@ var server = http.createServer(function (req,res) {
 	}
 })
 
-server.listen(3000, function () {
+server.listen(3000, () => {
 	console.log('hola ya corriendo')
 })
