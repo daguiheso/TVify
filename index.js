@@ -1,31 +1,35 @@
 var fs = require('fs')
 var http = require('http')
 
-fs.readFile('./public/index.html', function (err, data) {
-	console.log(data.toString().length)
-})
-
-console.log('Hola amigos')
+function serveStatic (name, callback) {
+	fs.readFile('./public/' + name, function (err, data) {
+		if (err) {
+			return callback(err)
+		}
+		callback(err, data.toString())
+	})
+}
 
 var server = http.createServer(function (req,res) {
 	switch(req.url) {
 		case '/':
-			fs.readFile('./public/index.html', function (err, data) {
-				res.end(data.toString())
+			serveStatic('index.html', function (err, content) {
+				res.end(content)
 			})
 			break
 		case '/app.js':
-			fs.readFile('./public/app.js', function (err, data) {
-				res.end(data.toString())
+			serveStatic('app.js', function (err, content) {
+				res.end(content)
 			})
 			break
 		case '/app.css':
-			fs.readFile('./public/app.css', function (err, data) {
-				res.end(data.toString())
+			serveStatic('app.css', function (err, content) {
+				res.end(content)
 			})
 			break
 		default:
-			res.end('')
+			res.statusCode = 404
+			res.end('Not Found')
 			break
 	}
 })
