@@ -13,8 +13,8 @@
   },
   "scripts": {
     "public": "md public & cd public & del *.* /F /S /Q",
-    "build-js": "browserify -t [ babelify --presets [ es2015 ] ] src/index.js -o public/app.js",
-    "copy-files": "cp src/index.css public/app.css & cp src/index.html public/index.html",
+    "build-js": "browserify -t [ babelify --presets [ es2015 ] ] src/client/index.js -o public/app.js",
+    "copy-files": "cp src/client/index.css public/app.css & cp src/client/index.html public/index.html",
     "build": "npm run public & npm run build-js & npm run copy-files ",
     "serve": "serve public"
   }
