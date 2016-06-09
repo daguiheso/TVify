@@ -6,6 +6,7 @@ const votes = {}
 
 // GET /api/votes
 router.get('/votes', (req, res) => {
+	console.log('Estoy en GET /votes')
 	res.json(votes)
 })
 
