@@ -4,14 +4,15 @@ var $tvShowsContainer = $('#app-body').find('.tv-shows');
 
 $tvShowsContainer.on('click', 'button.like', function (ev) {
 	var $this = $(this);
-	var id = $this.data('id') // data-id button
+	var $article = $this.closest('.tv-show')  /*closets function de jquery que busca elemento o tag padre que cumpla condicion*/
+	var id = $article.data('id') // data-id button
 	$.post('/api/vote/' + id, function () {
 		
 		$this.animate({
 			'fontSize': '30px'
 		}, 'fast')
-		$this.closest('.tv-show')  /*closets function de jquery que busca padre que cumpla condicion*/
-			.toggleClass('liked')
+		
+		$article.toggleClass('liked')
 	})
 })
 

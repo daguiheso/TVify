@@ -3,14 +3,15 @@ import $ from 'jquery';
 import $tvShowsContainer from '../tv-shows-container';
 
 
-let template = `<article class="tv-show">
+let template = `<article  data-id=:id: class="tv-show">
 					<div class="left img-container">
 						<img src=":img:" alt=":img alt:">
 					</div>
 					<div class="right info">
 						<h1>:name:</h1>
 						<p>:summary:</p>
-						<button data-id=:id: class="like">💙</button>
+						<button class="like">💙</button>
+						<span class="count">:count:</span>
 					</div>
 				</article>`
 
