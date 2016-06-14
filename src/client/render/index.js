@@ -26,6 +26,7 @@ export default function renderShows(shows) {
 			.replace(':summary:', show.summary)
 			.replace(':img alt:', show.name + "Logo")
 			.replace(':id:', show.id)
+			.replace(':count:', show.count)
 		// Convirtiendo en jquery object
 		var $article = $(article)
 		$tvShowsContainer.append($article)
