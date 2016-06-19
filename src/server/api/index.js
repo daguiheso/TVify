@@ -2,8 +2,6 @@ import express from 'express'
 const router = express.Router()
 
 import Vote from '../models'
-import mongoose from 'mongoose'
-mongoose.connect('mongodb://localhost/tvify')
 
 // GET /api/votes
 router.get('/votes', (req, res) => {
