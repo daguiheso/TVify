@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "babelify": "^7.3.0",
-    "browserify": "^13.0.1"
+    "browserify": "^13.0.1",
+    "standard": "^7.1.2"
   },
   "scripts": {
     "public": "md public & cd public & del *.* /F /S /Q",
@@ -19,6 +20,7 @@
     "copy-files": "cp src/client/index.css public/app.css & cp src/client/index.html public/index.html",
     "build": "npm run public & npm run build-js & npm run copy-files ",
     "serve": "babel-node src/server --presets es2015",
-    "start": "npm run build & npm run serve"
+    "start": "npm run build & npm run serve",
+    "lint": "standard"
   }
 }
