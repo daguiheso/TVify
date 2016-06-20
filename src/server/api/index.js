@@ -5,13 +5,34 @@ import tvmaze from 'tvmaze-dh'
 const router = express.Router()
 const client = tvmaze.createClient()
 
+function addVotes (shows, cb) {
+  Vote.find({}, (err, votes) => {
+    if (err) votes = []
+
+    /* recorrer array shows y array votes y machearlos por id- merge de data*/
+    shows = shows.map(show => {
+      /* a filter se le pasa una function para filtrar valores dentro de un array,
+         entonces la function espera que retorne un valor booleano con la info que
+         va a filtrar, filter retorna un arreglo por eso el [0]
+      */
+      let vote = votes.filter(vote => vote.showId === show.id)[0]
+      show.count = vote ? vote.count : 0
+      return show /* retrun del objeto transformado*/
+    })
+
+    cb(shows)
+  })
+}
+
 router.get('/shows', (req, res) => {
   client.shows((err, shows) => {
     if (err) {
       return res.sendStatus(500).json(err)
     }
 
-    res.json(shows)
+    addVotes(shows, shows => {
+      res.json(shows)
+    })
   })
 })
 
