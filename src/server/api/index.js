@@ -5,6 +5,7 @@ import tvmaze from 'tvmaze-dh'
 const router = express.Router()
 const client = tvmaze.createClient()
 
+/* metodo para transformacion de datos*/
 function addVotes (shows, cb) {
   Vote.find({}, (err, votes) => {
     if (err) votes = []
@@ -29,6 +30,22 @@ router.get('/shows', (req, res) => {
     if (err) {
       return res.sendStatus(500).json(err)
     }
+
+    addVotes(shows, shows => {
+      res.json(shows)
+    })
+  })
+})
+
+router.get('/search', (req, res) => {
+  let query = req.query.q
+  console.log(req.query)
+  client.search(query, (err, shows) => {
+    if (err) {
+      return res.sendStatus(500).json(err)
+    }
+
+    shows = shows.map(show => show.show)
 
     addVotes(shows, shows => {
       res.json(shows)
