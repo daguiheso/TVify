@@ -9,6 +9,8 @@
     "mongoose": "^4.4.20",
     "page": "^1.7.1",
     "qs": "^6.2.0",
+    "socket.io": "^1.4.8",
+    "socket.io-client": "^1.4.8",
     "tvmaze-dh": "^1.0.1"
   },
   "devDependencies": {

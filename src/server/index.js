@@ -1,9 +1,11 @@
+import http from 'http'
 // var app = require('express')()  otra manera de declarar
 import express from 'express'
 import api from '../../src/server/api'
 import mongoose from 'mongoose'
 
 const app = express()
+const server = http.createServer(app) /* creando servidor y como argumento la app de express*/
 const port = process.env.PORT || 3000
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/tvify')
@@ -18,4 +20,4 @@ app.use(express.static('public')) /* express.static('public') es un middleware y
 /* montar modulo api en /api*/
 app.use('/api', api)
 
-app.listen(port, () => console.log(`Server listening on port ${port}`))
+server.listen(port, () => console.log(`Server listening on port ${port}`))
