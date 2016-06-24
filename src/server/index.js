@@ -3,9 +3,15 @@ import http from 'http'
 import express from 'express'
 import api from '../../src/server/api'
 import mongoose from 'mongoose'
+import socketio from 'socket.io'
 
 const app = express()
-const server = http.createServer(app) /* creando servidor y como argumento la app de express*/
+/* creando servidor y como argumento la app de express*/
+const server = http.createServer(app)
+/* crear o instanciar el soketio dentro del servidor http y de esta manera ya
+   asociamos tanto la app de express como la app de socketio a nuestro servidor
+*/
+const io = socketio(server)
 const port = process.env.PORT || 3000
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/tvify')
@@ -19,5 +25,16 @@ app.use(express.static('public')) /* express.static('public') es un middleware y
 
 /* montar modulo api en /api*/
 app.use('/api', api)
+
+/* socketio esta pendiente de eventos y el primero sera las conexiones y una nueva conexion llega
+   cuando alguien desde el lado del cliente se conecta utilizando websockets al servidor
+*/
+
+/* escuchando por el evento connection y este entrega un socket que seria la persona o cliente que se conecto*/
+io.on('connection', (socket) => {
+  console.log(`Connected ${socket.id}`)
+
+  socket.on('ping', () => socket.emit('pong'))
+})
 
 server.listen(port, () => console.log(`Server listening on port ${port}`))
