@@ -4,6 +4,7 @@ import express from 'express'
 import api from '../../src/server/api'
 import mongoose from 'mongoose'
 import socketio from 'socket.io'
+import { incrementVote } from './lib'
 
 const app = express()
 /* creando servidor y como argumento la app de express*/
@@ -35,7 +36,11 @@ io.on('connection', (socket) => {
   console.log(`Connected ${socket.id}`)
 
   socket.on('vote', id => {
-    console.log(id)
+    incrementVote(id, (err, vote) => {
+      if (err) return socket.emit('vote:error', err)
+
+      io.emit('vote:done', vote) /* notificando al cliente este cambio*/
+    })
   })
 })
 
