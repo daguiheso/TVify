@@ -6,12 +6,11 @@ import socketio from 'socket.io-client'
    servidor habria que pasar la ruta, ip o host
 */
 let socket = socketio()
-/* enviar o emitir evento*/
-socket.emit('ping')
+
 /* recibir o escuchar evento, cuando lo recibe ejecuta una function*/
-socket.on('pong', function () {
-  console.log('PONG')
-})
+// socket.on('pong', function () {
+//   console.log('PONG')
+// })
 
 var $tvShowsContainer = $('#app-body').find('.tv-shows')
 
@@ -19,18 +18,10 @@ $tvShowsContainer.on('click', 'button.like', function (ev) {
   var $this = $(this)
   var $article = $this.closest('.tv-show') /* closets function de jquery que busca elemento o tag padre que cumpla condicion*/
   var id = $article.data('id') // data-id button
-  $.post('/api/vote/' + id, function () {
-    var counter = $this.closest('article').find('.count') /* busca la clase count que este mas cercana al $this (boton)*/
-    var content = counter.html() /* contenido html de counter*/
-    var count = Number(content) /* convirtiendo content en numero*/
-    count = count + 1
-    counter.html(count) /* cambiando valor de count en html*/
-    $this.animate({
-      'fontSize': '30px'
-    }, 'fast')
 
-    $article.toggleClass('liked')
-  })
+  /* enviar o emitir evento al servidor y argumento id para saber por quien voto*/
+  socket.emit('vote', id)
+  $article.toggleClass('liked')
 })
 
 export default $tvShowsContainer

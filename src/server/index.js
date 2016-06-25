@@ -34,7 +34,9 @@ app.use('/api', api)
 io.on('connection', (socket) => {
   console.log(`Connected ${socket.id}`)
 
-  socket.on('ping', () => socket.emit('pong'))
+  socket.on('vote', id => {
+    console.log(id)
+  })
 })
 
 server.listen(port, () => console.log(`Server listening on port ${port}`))
