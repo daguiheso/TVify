@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
     incrementVote(id, (err, vote) => {
       if (err) return socket.emit('vote:error', err)
 
-      io.emit('vote:done', vote) /* notificando al cliente este cambio*/
+      io.sockets.emit('vote:done', vote) /* notificando al cliente este cambio*/
     })
   })
 })
