@@ -11,7 +11,7 @@
     "qs": "^6.2.0",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
-    "tvmaze-dh": "^1.0.1"
+    "tvmaze-dh": "^1.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
