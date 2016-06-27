@@ -5,6 +5,19 @@ import { getVotes, addVotes, incrementVote } from '../lib'
 const router = express.Router()
 const client = tvmaze.createClient()
 
+// GET /api/shows?id
+router.get('/show/:id', (req, res) => {
+  let id = req.params.id
+
+  client.show(id, (err, show) => {
+    if (err) {
+      return res.sendStatus(500).json(err)
+    }
+
+    res.json(show)
+  })
+})
+
 // GET /api/shows
 router.get('/shows', (req, res) => {
   client.shows((err, shows) => {
