@@ -9,8 +9,9 @@ let template = `<article  data-id=:id: class="tv-show">
           <div class="right info">
             <h1>:name:</h1>
             <p>:summary:</p>
-            <button class="like">💙</button>
+            <button class="like">💖</button>
             <span class="count">:count:</span>
+            <button class="chat">💬</button>
           </div>
         </article>`
 
