@@ -2,7 +2,7 @@ import $ from 'jquery'
 // import $tvShowsContainer from 'src/tv-shows-container'
 import $tvShowsContainer from '../tv-shows-container'
 
-let template = `<article  data-id=:id: class="tv-show">
+var template = `<article  data-id=:id: class="tv-show">
           <div class="left img-container">
             <img src=":img:" alt=":img alt:">
           </div>
@@ -15,10 +15,19 @@ let template = `<article  data-id=:id: class="tv-show">
           </div>
         </article>`
 
-/* como solo es una function a exportar ponemos default y de esta manera cuando
-   importemos este modulo no hace falta especificar que estamos importando
-*/
-export default function renderShows (shows) {
+var chatTemplate = `<article data-id=:id: class="chat-container">
+          <div class="left img-container">
+            <img src=":img:" alt=":img alt:">
+          </div>
+          <div class="right chat-window">
+            <h1>:name:</h1>
+            <div class="chat-body"></div>
+            <input type="text" name="nickname" class="chat-nick" placeholder="Enter your nickname..." />
+            <input type="text" name="message" class="chat-input" disabled />
+          </div>
+        </article>`
+
+export function renderShows (shows) {
   $tvShowsContainer.find('.loader').remove()
   shows.forEach(function (show) {
     var article = template
@@ -33,5 +42,20 @@ export default function renderShows (shows) {
     $tvShowsContainer.append($article)
     $article.hide()
     $article.show('slow')
+  })
+}
+
+export function renderChat (id) {
+  $.ajax('/api/show/' + id, {
+    success: function (show, textStatus, xhr) {
+      var chat = chatTemplate
+        .replace(':id:', id)
+        .replace(':name:', show.name)
+        .replace(':img:', show.image ? show.image.medium : '')
+        .replace(':img alt:', show.name + ' Logo')
+
+      var $chat = $(chat)
+      $tvShowsContainer.append($chat.fadeIn(1000))
+    }
   })
 }

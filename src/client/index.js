@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import page from 'page'
 import { getShows, searchShows } from './tvmaze-api-client' /* como exportamos 2 funciones entonces utilizamos llaves*/
-import renderShows from './render'
+import { renderShows, renderChat } from './render'
 import $tvShowsContainer from './tv-shows-container'
 import './search-form'
 import qs from 'qs'
@@ -25,6 +25,11 @@ page('/search', function (ctx, next) {
 
     renderShows(shows)
   })
+})
+
+page('/chat/:showId', function (ctx, next) {
+  $tvShowsContainer.find('.tv-show').remove()
+  renderChat(ctx.params.showId)
 })
 
 page()

@@ -8,8 +8,7 @@ const client = tvmaze.createClient()
 // GET /api/shows?id
 router.get('/show/:id', (req, res) => {
   let id = req.params.id
-
-  client.show(id, (err, show) => {
+  client.showId(id, (err, show) => {
     if (err) {
       return res.sendStatus(500).json(err)
     }

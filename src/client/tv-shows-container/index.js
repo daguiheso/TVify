@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import page from 'page'
 import socketio from 'socket.io-client'
 
 /* conectar a servidor - esto se va a conectar automaticamente al servidor
@@ -7,17 +8,34 @@ import socketio from 'socket.io-client'
 */
 let socket = socketio()
 
-var $tvShowsContainer = $('#app-body').find('.tv-shows')
+let $tvShowsContainer = $('#app-body').find('.tv-shows')
 
 // Click like show
 $tvShowsContainer.on('click', 'button.like', function (ev) {
-  var $this = $(this)
-  var $article = $this.closest('.tv-show') /* closets function de jquery que busca elemento o tag padre que cumpla condicion*/
-  var id = $article.data('id') // data-id button
+  let $this = $(this)
+  let $article = $this.closest('.tv-show') /* closets function de jquery que busca elemento o tag padre que cumpla condicion*/
+  let id = $article.data('id') // data-id article
 
   /* enviar o emitir evento al servidor y argumento id para saber por quien voto*/
   socket.emit('vote', id)
   $article.toggleClass('liked')
+})
+
+// Click chat btn
+$tvShowsContainer.on('click', 'button.chat', function (ev) {
+  let $this = $(this)
+  let $article = $this.closest('.tv-show')
+  let id = $article.data('id') // data-id article
+
+  page('/chat/' + id)
+})
+
+//
+$tvShowsContainer.on('keypress', '.chat-nick', function (ev) {
+  let $this = $(this)
+  let $chatInput = $('.chat-input')
+
+  $chatInput.prop('disabled', $this.val().length === 0)
 })
 
 /* escuchando evento vote:done que recibe un voto y vote tiene el numero de votos del show*/
