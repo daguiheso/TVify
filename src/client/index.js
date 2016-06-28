@@ -8,6 +8,7 @@ import qs from 'qs'
 
 page('/', function (ctx, next) {
   $tvShowsContainer.find('.tv-show').remove()
+  $tvShowsContainer.find('.chat-container').remove()
   getShows(function (shows) {
     $tvShowsContainer.find('.loader').remove()
     renderShows(shows)

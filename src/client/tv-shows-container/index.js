@@ -30,12 +30,28 @@ $tvShowsContainer.on('click', 'button.chat', function (ev) {
   page('/chat/' + id)
 })
 
-//
+// Enabled input chat
 $tvShowsContainer.on('keypress', '.chat-nick', function (ev) {
   let $this = $(this)
   let $chatInput = $('.chat-input')
 
   $chatInput.prop('disabled', $this.val().length === 0)
+})
+
+// Message enter and
+$tvShowsContainer.on('keypress', '.chat-input', function (ev) {
+  let $this = $(this)
+  let nick = $('.chat-nick').val()
+
+  if (ev.which === 13) {
+    let message = $this.val()
+
+    // { nick:nick, message: message }
+    socket.emit('message', { nick, message }) /* forma es6 llave:valor se obvia*/
+    addMessage(nick, message) /* Añadir message a la interfaz ya que es mi propio mensaje - broadcast*/
+
+    $this.val('')
+  }
 })
 
 /* escuchando evento vote:done que recibe un voto y vote tiene el numero de votos del show*/
@@ -47,5 +63,17 @@ socket.on('vote:done', vote => {
   /* actualizando count en el html*/
   counter.html(vote.count)
 })
+
+socket.on('message', msg => {
+  /* object destructuring - asignación por destructuring*/
+  let { nick, message } = msg
+  addMessage(nick, message) /* Añadir message a la interfaz */
+})
+
+// Añadir message a la interfaz
+function addMessage (nick, message) {
+  let $chatBody = $('.chat-body')
+  $chatBody.append(`<p><b>${nick}:</b> ${message}</p>`)
+}
 
 export default $tvShowsContainer

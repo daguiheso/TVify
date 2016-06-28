@@ -42,6 +42,10 @@ io.on('connection', (socket) => {
       io.sockets.emit('vote:done', vote) /* notificando al cliente este cambio*/
     })
   })
+
+  socket.on('message', msg => {
+    socket.broadcast.emit('message', msg) /* reenviando a los conectados a este chat*/
+  })
 })
 
 server.listen(port, () => console.log(`Server listening on port ${port}`))
