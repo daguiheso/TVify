@@ -43,8 +43,16 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('join', room => {
+    /* si queremos guardar variables para el socket(persona que se conecto) podemos guardarle info a ese socket*/
+    socket.room = room
+    /* uniendo socket al canal con join del api de socketio no join el nombre del evento*/
+    socket.join(room)
+    // scoket.leave(room) para sacar ese soket de ese room o salon
+  })
+
   socket.on('message', msg => {
-    socket.broadcast.emit('message', msg) /* reenviando a los conectados a este chat*/
+    socket.broadcast.to(socket.room).emit('message', msg) /* reenviando a un canal especiifico*/
   })
 })
 
