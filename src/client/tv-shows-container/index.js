@@ -75,6 +75,10 @@ socket.on('message', msg => {
 function addMessage (nick, message) {
   let $chatBody = $('.chat-body')
   $chatBody.append(`<p><b>${nick}:</b> ${message}</p>`)
+  /* Cambiar tamaño o posicion del scrolltop obteniendo el tamaño del scroll que tenemos en la ventana y
+     lo seteamos como el tamaño del scrolltop y de esta manera estar siempre en la parte final
+  */
+  $chatBody.animate({ scrollTop: $chatBody.get(0).scrollHeight }, 1000)
 }
 
 export default $tvShowsContainer
